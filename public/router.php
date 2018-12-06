@@ -8,22 +8,16 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+// $Id$
 
-return [
-    // 生成应用公共文件
-    '__file__' => ['common.php', 'config.php', 'database.php'],
+//echo $_SERVER["DOCUMENT_ROOT"];
+//echo $_SERVER["REQUEST_URI"];
 
-    // 定义demo模块的自动生成 （按照实际定义的文件名生成）
-    'demo'     => [
-        '__file__'   => ['common.php'],
-        '__dir__'    => ['behavior', 'controller', 'model', 'view'],
-        'controller' => ['Index', 'Test', 'UserType'],
-        'model'      => ['User', 'UserType'],
-        'view'       => ['index/index'],
-    ],
-	// 入口模块
-	'index' => [
-		'controller'	=> ['Index'],
-	],
-    // 其他更多的模块定义
-];
+if (is_file($_SERVER["DOCUMENT_ROOT"] . $_SERVER["REQUEST_URI"])) {
+    return false;
+} else {
+    if (!isset($_SERVER['PATH_INFO'])) {
+        $_SERVER['PATH_INFO'] = $_SERVER['REQUEST_URI'];
+    }
+    require __DIR__ . "/index.php";
+}
