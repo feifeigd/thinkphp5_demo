@@ -20,6 +20,9 @@
         "topthink/framework": "~5.1.0",
         "topthink/think-captcha": "^2.0"
     },
+    "autoload": {
+        "psr-4": {"app\\": "application"}
+    },
     "extra": {
         "think-path": "thinkphp"
     },
