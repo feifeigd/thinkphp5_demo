@@ -38,6 +38,7 @@ ThinkPHP5在保持快速开发和大道至简的核心理念不变的同时，PH
 www  WEB部署目录（或者子目录）
 ├─application           应用目录
 │  ├─common             公共模块目录（可以更改）
+│  ├─extra              扩展配置目录
 │  ├─module_name        模块目录
 │  │  ├─config.php      模块配置文件
 │  │  ├─common.php      模块函数文件
