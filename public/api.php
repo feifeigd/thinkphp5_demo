@@ -99,7 +99,7 @@ if($module_dir = opendir(APP_PATH)){
                                                     $parameter['type'] = 'array';
                                                     $parameter['items'] = ['type' => str_replace('[]', '', $type),];
                                                     $parameter['collectionFormat'] = 'brackets'; // url带中括号
-                                                    $parameter['collectionFormat'] = 'multi'; // url不带中括号
+                                                    //$parameter['collectionFormat'] = 'multi'; // url不带中括号
                                                 }else if('' != $enums[$j]){ // 是否枚举参数
                                                     $enum = explode('|', $enums[$j]);
                                                     $parameter['type'] = $type;

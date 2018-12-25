@@ -127,11 +127,11 @@ class Passport extends Controller
      * path: profile
      * param: keys - {string[]} 需要获取配置的key值数组
      */
-    public function prifile($keys){
+    public function profile($keys){
         return [
             'code'  => 200,
             'message'   => '获取成功', 
-            'data'  => $keys，
-        ]；
+            'data'  => $keys,
+        ];
     }
 }
