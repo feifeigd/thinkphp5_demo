@@ -1,0 +1,8 @@
+
+
+<form method="post" action="/learn/verification_code/verify">
+    显示验证码
+    <input type="text" name="verify_code"><div>{:captcha_img()}</div>
+    {:token()}
+    <button type="submit" value="提交"/>
+</form>
