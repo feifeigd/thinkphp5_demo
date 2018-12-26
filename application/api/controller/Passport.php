@@ -87,8 +87,9 @@ class Passport extends Controller
     /**
      * post: 发送验证码
      * path: sendVerify/phone/{phone}/device_type/{deviceType}
-     * @param: phone - {string} 手机号
-     * @param: deviceType - {int} = [0|1|2|3|4] 设备类型(0: android手机, 1: ios手机, 2: android平板, 3: ios平板, 4: pc)
+     * @param $phone - {string} 手机号
+     * @param $deviceType - {int} = [0|1|2|3|4] 设备类型(0: android手机, 1: ios手机, 2: android平板, 3: ios平板, 4: pc)
+     * @return array
      */
     public function sendVerify($phone, $deviceType){
         return [
@@ -104,10 +105,11 @@ class Passport extends Controller
     /**
      * post: 登陆
      * path: login
-     * @param: phone - {string} 手机号
-     * param: password - {string} 密码
-     * param: deviceType - {int} = [0|1|2|3|4] 设备类型(0:android手机,1:ios手机,2:android平板,3:ios平板,4:pc)
-     * param: verifyCode - {string} = 0 验证码
+     * @param $phone - {string} 手机号
+     * @param $password - {string} 密码
+     * @param $deviceType - {int} = [0|1|2|3|4] 设备类型(0:android手机,1:ios手机,2:android平板,3:ios平板,4:pc)
+     * @param $verifyCode - {string} = 0 验证码
+     * @return array
      */
     public function login($phone, $password, $deviceType, $verifyCode = '0'){
         return [
@@ -125,7 +127,8 @@ class Passport extends Controller
     /**
      * get: 获取配置
      * path: profile
-     * param: keys - {string[]} 需要获取配置的key值数组
+     * @param $keys - {string[]} 需要获取配置的key值数组
+     * @return array
      */
     public function profile($keys){
         return [
