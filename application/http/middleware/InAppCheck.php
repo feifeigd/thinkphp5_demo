@@ -11,6 +11,6 @@ class InAppCheck
         $request->InApp = 'WeChat';
       if(preg_match('~alipay~i', $request->header('user-agent')))
         $request->InApp = 'Alipay';
-      $next($request);
+      return $next($request);
     }
 }
