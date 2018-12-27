@@ -7,4 +7,6 @@ return [
     'database'          => 'test',
     'debug'             => \Env::get('database.debug'),
     'password'          => 'root',
+    // 开启自动写入时间戳字段
+    'auto_timestamp' => 'datetime',
 ];
