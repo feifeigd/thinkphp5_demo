@@ -13,4 +13,7 @@ class Index
         return 'hello ' . $name;
     }
     
+    public function think(){
+      return 'index/think';
+    }
 }
