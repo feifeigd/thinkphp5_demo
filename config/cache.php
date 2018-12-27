@@ -24,6 +24,8 @@ return [
   'file'  => [
     // 驱动方式
     'type'  => 'File',
+    // 缓存有效期(秒) 0表示永久
+    'expire'  => 60,
     // 缓存前缀
     'prefix'  => 'cache_',
   ],
