@@ -14,6 +14,11 @@ return [
   'default' => [
     // 驱动方式
     'type'  => 'redis',
+    // 缓存有效期(秒) 0表示永久
+    'expire'  => 60,
+    'persistent' => true,
+    'prefix'     => 'cache_',
+    'select'     => 0,
   ],
   // 文件缓存
   'file'  => [
@@ -21,8 +26,6 @@ return [
     'type'  => 'File',
     // 缓存前缀
     'prefix'  => 'cache_',
-    // 缓存有效期 0表示永久
-    'expire'  => 60,
   ],
 ];
 

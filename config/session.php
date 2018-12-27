@@ -12,4 +12,7 @@ return [
   'type'  => 'redis',
   // 是否自动开启SESSION
   'auto_start'  => true,
+  'select'       => 2, // 操作库 0~15
+  'expire'       => 1800, // 有效期(秒)
+  'session_name' => 'session_', // sessionkey前缀
 ];
