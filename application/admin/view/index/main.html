@@ -1,10 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/css/style.css">
+<literal>
+<style>
+    .mainnav_title{display: none;}
+    h1 {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        font-size: 14px;
+        height: 30px;
+        line-height: 30px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        padding-left: 15px;
+        zoom: 1;
+    }
+    h1 b{
+        color: #3865b8;
+    }
+    h1 span{
+        color: #ccc;
+        font-size: 10px;
+        margin-left: 10px;
+    }
+    #Profile{
+        float: left;
+        height: 191px;
+        margin: 5px 15px 0 0;
+        width: 48%;
+    }
+    #system{
+        float: left;
+        margin: 5px 15px 0 0;
+        width: 48%;
+    }
+    .list ul{
+        border: 1px #ddd solid;
+        border-bottom: none;
+        overflow: hidden;
+    }
+    .list ul li{
+        border-bottom: 1px #ddd solid;
+        color: #777;
+        height: 26px;
+        line-height: 26px;
+        overflow: hidden;
+        padding-left: 5px;
+        zoom: 1;
+    }
+    .list ul li span{
+        color: #777;
+        display: block;
+        float: left;
+        width: 100px;
+    }
+</style>
+</literal>
+<div id="Profile" class="list">
+    <h1><b>账号信息</b><span>Profile&nbsp; Info</span></h1>
+    <ul>
+        <li><span>账号名称：</span>{$Think.session.username}</li>
+        <li><span>所属级别：</span>管理员</li>
+    </ul>
+</div>
 
-</body>
-</html>
+<div id="system" class="list">
+    <h1><b>系统信息</b><span>System&nbsp; Info</span></h1>
+    <ul>
+        {volist name="info" id="vo" key="k"}
+        <li><span>{$key}:</span>{$vo}</li>
+        {/volist}
+    </ul>
+</div>

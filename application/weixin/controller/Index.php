@@ -4,7 +4,6 @@ namespace app\weixin\controller;
 
 use think\Controller;
 use think\Db;
-use think\Request;
 
 define('TOKEN', 'fangbei');
 
@@ -60,18 +59,32 @@ class Index extends Controller
         // 消息类型分离
         switch($RX_TYPE){
             case 'event':
-                // TODO: Implement
                 $result = $this->receiveEvent($postObj);
                 break;
             case 'text':
                 $result = $this->receiveText($postObj);
+                break;
+            case 'image':
+                $result = $this->receiveImage($postObj);
+                break;
+            case 'location':
+                $result = $this->receiveLocation($postObj);
+                break;
+            case 'voice':
+                $result = $this->receiveVoice($postObj);
+                break;
+            case 'video':
+                $result = $this->receiveVideo($postObj);
+                break;
+            case 'link':
+                $result = $this->receiveLink($postObj);
                 break;
             default:
                 $result = 'unknown msg type: ' . $RX_TYPE;
                 break;
         }
         $this->logger('T ' . $result);
-        echo $result;
+        echo $result;   // 回复给微信服务器
     }
 
     /// 接收事件消息
@@ -169,6 +182,7 @@ class Index extends Controller
                 $content = 'receive a new event: ' . $object->Event;
                 break;
         }
+        $result = '';
         if(is_array($content)){
             if(isset($content[0]))
                 $result = $this->transmitNews($object, $content);
@@ -182,77 +196,266 @@ class Index extends Controller
     /// 接收文本消息
     function receiveText($object){
         $keyword = trim($object->Content);
-    }
-    /**
-     * 显示创建资源表单页.
-     *
-     * @return \think\Response
-     */
-    public function create()
-    {
-        //
-        return 'create';
+        $openid = strval($object->FromUserName);
+        //$content = '';
+        $result = '';
+        // 多客服人工回复模式
+        if(strstr($keyword, '在线客服_') || strstr($keyword, '你好_'))
+            $result = $this->transmitService($object);
+        // 自动回复模式
+        else {
+            if(strstr($keyword, '文本'))
+                $content = '这是个文本消息\n' . $openid;
+            else if (strstr($keyword, '单图文')){
+                $content = [
+                    'Title' => '单图文标题',
+                    'Description' => '单图文内容',
+                    'PicUrl' => 'http://files.cnblogs.com/files/txw1958/cartoon.gif',
+                    'Url' => 'http://m.cnblogs.com/?u=txw1958',
+                ];
+                $weixin = new \weixin\Wxapi();
+                $template = [
+                    'touser' => $openid,
+                    'template_id' => '_yFpVtfHd0pSWy6ffApi6isjY8HmmWC8aKW-Uqz8viU',
+                    'url' => 'http://www.baidu.com',
+                    'topcolor' => '#0000C6',
+                    'data' => [
+                        'content' => [
+                            'value' => '你妈妈\\n喊你\\n回家吃饭了!',
+                            'color' => '#743A3A',
+                        ],
+                    ],
+                ];
+                $weixin->send_template_message($template);
+            }else if(strstr($keyword, '图文') || strstr($keyword, '多图文')){
+                $content = [];
+                $content[] = ["Title"=>"多图文1标题", "Description"=>"", "PicUrl"=>"http://files.cnblogs.com/files/txw1958/cartoon.gif", "Url" =>"http://m.cnblogs.com/?u=txw1958"];
+                $content[] = ["Title"=>"多图文2标题", "Description"=>"", "PicUrl"=>"http://d.hiphotos.bdimg.com/wisegame/pic/item/f3529822720e0cf3ac9f1ada0846f21fbe09aaa3.jpg", "Url" =>"http://m.cnblogs.com/?u=txw1958"];
+                $content[] = ["Title"=>"多图文3标题", "Description"=>"", "PicUrl"=>"http://g.hiphotos.bdimg.com/wisegame/pic/item/18cb0a46f21fbe090d338acc6a600c338644adfd.jpg", "Url" =>"http://m.cnblogs.com/?u=txw1958"];
+            }else if(strstr($keyword, '音乐')){
+                $content = ["Title"=>"最炫民族风", "Description"=>"歌手：凤凰传奇", "MusicUrl"=>"http://121.199.4.61/music/zxmzf.mp3", "HQMusicUrl"=>"http://121.199.4.61/music/zxmzf.mp3"];
+            }else $content = $this->xiaoirobot($openid, $keyword);
+
+            if(is_array($content)){
+                if(isset($content[0]['PicUrl']))
+                    $result = $this->transmitNews($object, $content);
+                elseif(isset($content['MusicUrl']))
+                    $result = $this->transmitMusic($object, $content);
+            }else $result = $this->transmitText($object, $content);
+        }
+        return $result;
     }
 
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
-    {
-        //
-        return null;
+    // 接收图片消息
+    function receiveImage($object){
+        $content = ['MediaId' => $object->MediaId,];
+        $result = $this->transmitImage($object, $content);
+        return $result;
     }
 
-    /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function read($id)
-    {
-        //
-        return 'read';
+    // 接收位置消息
+    function receiveLocation($object){
+        $content = "你发送的是位置，经度为：$object->Location_Y；纬度为： $object->Location_X；缩放级别为：$object->Scale；位置为：$object->Label";
+        $result = $this->transmitText($object, $content);
+        return $result;
     }
 
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
-    {
-        //
-        return null;
+    // 接收语音消息
+    function receiveVoice($object){
+        if(isset($object->Recognition) && !empty($object->Recognition)){
+            $content = '您刚才说的是：' . $object->Recognition;
+            $result = $this->transmitText($object, $content);
+        }else{
+            $content = ['MediaId' => $object->MediaId, ];
+            $result = $this->transmitVoice($object, $content);
+        }
+        return $result;
     }
 
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-        return null;
+    // 接收视频消息
+    function receiveVideo($object){
+        $content = ['MediaId' => $object->MediaId, 'ThumbMediaId' => $object->ThumbMediaId, 'Title' => "", 'Description' => '', ];
+        $result = $this->transmitVideo($object, $content);
+        return $result;
     }
 
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
-        return null;
+    // 接收链接消息
+    function receiveLink($object){
+        $content = '你发送的是链接，标题为：' . $object->Title . '；内容为：' . $object->Description . '；链接地址为：' . $object->Url;
+        $result = $this->transmitText($object, $content);
+        return $result;
+    }
+
+    // 回复文本消息
+    function transmitText($object, $content){
+        if(!isset($content) || empty($content))return '';
+        $xmlTpl = '<xml>
+<ToUserName><![CDATA[%s]]></ToUserName>
+<FromUserName><![CDATA[%s]]></FromUserName>
+<CreateTime>%s</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[%s]]></Content>
+</xml>';
+        $result = sprintf($xmlTpl, $object->FromUserName, $object->ToUserName, time(), $content);
+        return $result;
+    }
+
+    // 回复图文消息
+    function transmitNews($object, $newsArray){
+        if(!is_array($newsArray))return '';
+        $itemTpl = '<item>
+<Title><![CDATA[%s]]></Title>
+<Description><![CDATA[%s]]></Description>
+<PicUrl><![CDATA[%s]]></PicUrl>
+<Url><![CDATA[%s]]></Url>
+</item>';
+        $item_str = '';
+        foreach($newsArray as $item)
+            $item_str .= sprintf($itemTpl, $item['Title'], $item['Description'], $item['PicUrl'], $item['Url']);
+        $xmlTpl = "<xml>
+<ToUserName><![CDATA[%s]]></ToUserName>
+<FromUserName><![CDATA[%s]]></FromUserName>
+<CreateTime>%s</CreateTime>
+<MsgType><![CDATA[news]]></MsgType>
+<ArticleCount>%s</ArticleCount>
+<Articles>$item_str</Articles>
+</xml>";
+        $result = sprintf($xmlTpl, $object->FromUserName, $object->ToUserName, time(), count($newsArray));
+        return $result;
+    }
+
+    // 回复音乐消息
+    function transmitMusic($object, $musicArray){
+        $itemTpl = '<Music>
+<Title><![CDATA[%s]]></Title>
+<Description><![CDATA[%s]]></Description>
+<MusicUrl><![CDATA[%s]]></MusicUrl>
+<HQMusicUrl><![CDATA[%s]]></HQMusicUrl>
+</Music>';
+        $item_str = sprintf($itemTpl, $musicArray['Title'], $musicArray['Description'], $musicArray['MusicUrl'], $musicArray['HQMusicUrl']);
+        $xmlTpl = "<xml>
+<ToUserName><![CDATA[%s]]></ToUserName>
+<FromUserName><![CDATA[%s]]></FromUserName>
+<CreateTime>%s</CreateTime>
+<MsgType><![CDATA[music]]></MsgType>
+$item_str
+</xml>";
+        $result = sprintf($xmlTpl, $object->FromUserName, $object->ToUserName, time());
+        return $result;
+    }
+
+    // 回复图片消息
+    function transmitImage($object, $imageArray){
+        $itemTpl = '<Image>
+<MediaId><![CDATA[%s]]></MediaId>
+</Image>';
+        $item_str = sprintf($itemTpl, $imageArray['MediaId']);
+        $xmlTpl = "<xml>
+<ToUserName><![CDATA[%s]]></ToUserName>
+<FromUserName><![CDATA[%s]]></FromUserName>
+<CreateTime>%s</CreateTime>
+<MsgType><![CDATA[image]]></MsgType>
+$item_str
+</xml>";
+        $result = sprintf($xmlTpl, $object->FromUserName, $object->ToUserName, time());
+        return $result;
+    }
+
+    // 回复语音消息
+    function transmitVoice($object, $voiceArray){
+        $itemTpl = '<Voice>
+<MediaId><![CDATA[%s]]></MediaId>
+</Voice>';
+        $item_str = sprintf($itemTpl, $voiceArray['MediaId']);
+        $xmlTpl = "<xml>
+<ToUserName><![CDATA[%s]]></ToUserName>
+<FromUserName><![CDATA[%s]]></FromUserName>
+<CreateTime>%s</CreateTime>
+<MsgType><![CDATA[voice]]></MsgType>
+$item_str
+</xml>";
+        $result = sprintf($xmlTpl, $object->FromUserName, $object->ToUserName, time());
+        return $result;
+    }
+
+    // 回复视频消息
+    function transmitVideo($object, $videoArray){
+        $itmeTpl = '<Video>
+<MediaId><![CDATA[%s]]></MediaId>
+<ThumbMediaId><![CDATA[%s]]></ThumbMediaId>
+<Title><![CDATA[%s]]></Title>
+<Description><![CDATA[%s]]></Description>
+</Video>';
+        $item_str = sprintf($itmeTpl, $videoArray['MediaId'], $videoArray['ThumbMediaId'], $videoArray['Title'], $videoArray['Description']);
+        $xmlTpl = "<xml>
+<ToUserName><![CDATA[%s]]></ToUserName>
+<FromUserName><![CDATA[%s]]></FromUserName>
+<CreateTime>%s</CreateTime>
+<MsgType><![CDATA[video]]></MsgType>
+$item_str;
+</xml>";
+        $result = sprintf($xmlTpl, $object->FromUserName, $object->ToUserName, time());
+        return $result;
+    }
+    // 回复多客服消息
+    function transmitService($object){
+        $xmlTpl = "<xml>
+<ToUserName><![CDATA[%s]]></ToUserName>
+<FromUserName><![CDATA[%s]]></FromUserName>
+<CreateTime>%s</CreateTime>
+<MsgType><![CDATA[transfer_customer_service]]></MsgType>
+</xml>";
+        $result = sprintf($xmlTpl, $object->FromUserName, $object->ToUserName, time());
+        return $result;
+    }
+
+    // 机器人回复
+    function xiaoirobot($openid, $content){
+        // 定义app
+        $app_key = '';
+        $app_secret = '';
+
+        // 签名算法
+        $realm = 'xiaoi.com';
+        $method = 'POST';
+        $uri = '/robot/ask.do';
+        $nonce = '';
+        $chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        for ($i = 0; $i < 40; ++$i)
+            $nonce .= $chars[mt_rand(0, strlen($chars) - 1)];
+        $HA1 = sha1($app_key . ':' . $realm . ':' . $app_secret);
+        $HA2 = sha1($method . ':' . $uri);
+        $sign = sha1($HA1 . ':' . $nonce . ':' . $HA2);
+
+        // 接口调用
+        $url = 'http://nlp.xiaoi.com/robot/ask.do';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['X-Auth: app_key="'.$app_key.'", nonce="'.$nonce.'", signature="'.$sign.'"']);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'question='.urlencode($content).'&userId='.$openid.'&platform=custom&type=0');
+        $output = curl_exec($ch);
+        if($output === FALSE)return 'cURL Error: '. curl_error($ch);
+        return trim($output);
+    }
+
+    // 字节转Emoji表情
+    function bytes_to_emoji($cp){
+        if($cp > 0x10000)   // 4 bytes
+            return chr(0xf0 | (($cp & 0x1c0000) >> 18))
+                . chr(0x80 | (($cp & 0x3f000) >> 12))
+                . chr(0x80 | (($cp & 0xfc0) >> 6))
+                . chr(0x80 | ($cp & 0x3f));
+        elseif ($cp > 0x800) // 3 bytes
+            return chr(0xe0 | (($cp & 0xf000) >> 12))
+                . chr(0x80 | (($cp & 0xfc0) >> 6))
+                . chr(0x80 | ($cp & 0x3f));
+        elseif ($cp > 0x80) //  2 bytes
+            return chr(0xc0 | (($cp & 0x7c0) >> 6))
+                . chr(0x80 | ($cp & 0x3f));
+        else
+            return chr($cp);
     }
 
     /// 日志记录
