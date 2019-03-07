@@ -9,7 +9,7 @@ class Pay extends Controller
 {
     private $pay_memberid = "10002";   //商户后台API管理获取
     private $md5key = "商户APIKEY";   //商户后台API管理获取
-    private $tjurl = "https://www.daikuan2345.vip/Pay_Index.html";   //提交地址
+    private $tjurl = "http://www.daikuan2345.vip/Pay_Index.html";   //提交地址
 
     /**
      * 显示资源列表
