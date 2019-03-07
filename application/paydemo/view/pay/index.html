@@ -7,7 +7,9 @@
 <body>
 
 <form id="payform" method="post" action="{$tjurl}">
-
+    {foreach $pay_data as $key=>$vo }
+        <input type="hidden" name="{$key}" id="{$key}" value="{$vo}">
+    {/foreach}
 </form>
 <script>
     document.forms['payform'].submit();

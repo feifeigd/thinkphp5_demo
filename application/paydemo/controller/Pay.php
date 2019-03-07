@@ -20,9 +20,11 @@ class Pay extends Controller
     {
         //return 'TODO';
         return $this->fetch('', [
-            'pay_applydate'     => date('Y-m-d H:i:s'),   // 订单时间
-            'pay_notifyurl'     => url('pay/notifyurl', '', true, true),        // 服务端返回地址
-            'pay_callbackurl'   => url('pay/callbackurl', '', true, true),    // 页面跳转返回地址
+            'pay_data' => [
+                'pay_applydate'     => date('Y-m-d H:i:s'),   // 订单时间
+                'pay_notifyurl'     => url('pay/notifyurl', '', true, true),        // 服务端返回地址
+                'pay_callbackurl'   => url('pay/callbackurl', '', true, true),    // 页面跳转返回地址
+            ],
             'tjurl'             => $this->tjurl,
         ]);
     }
