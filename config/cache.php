@@ -16,6 +16,7 @@ return [
     'type'  => 'redis',
     // 缓存有效期(秒) 0表示永久
     'expire'  => 60,
+      'host'    => 'redis',
     'persistent' => true,
     'prefix'     => 'cache_',
     'select'     => 0,
