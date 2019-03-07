@@ -27,8 +27,8 @@ class Pay extends Controller
             'pay_orderid'       => Request::post('pay_orderid/s'),
             'pay_applydate'     => date('Y-m-d H:i:s'),   // 订单时间
             'pay_bankcode'      => Request::post('pay_bankcode/s'),
-            'pay_notifyurl'     => url('pay/notifyurl', '', true, true),        // 服务端返回地址
-            'pay_callbackurl'   => url('pay/callbackurl', '', true, true),    // 页面跳转返回地址
+            'pay_notifyurl'     => 'http://tp.d7kj.com/paydemo/pay/notifyurl.html', // url('pay/notifyurl', '', true, true),        // 服务端返回地址
+            'pay_callbackurl'   => 'http://tp.d7kj.com/paydemo/pay/callbackurl.html', //url('pay/callbackurl', '', true, true),    // 页面跳转返回地址
             'pay_amount'        => Request::post('pay_amount/f'),
         ];
         ksort($pay_data);
