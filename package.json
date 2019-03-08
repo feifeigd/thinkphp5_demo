@@ -1,0 +1,13 @@
+{
+  "name": "tp_demo",
+  "version": "1.0.0",
+  "description": "web",
+  "main": "index.js",
+  "repository": "git@github.com:feifeigd/thinkphp5_demo.git",
+  "author": "feifeigd <feifeigd@21cn.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "perfect-scrollbar": "^1.4.0"
+  }
+}
