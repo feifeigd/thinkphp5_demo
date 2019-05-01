@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>支付demo</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+
+    </style>
+</head>
+
+<body>
+<div class="container content-center center">
+    <div class="row" style="margin: 15px;">
+        <div class="col-md-12">
+            <form class="form-horizontal" method="post" action="{:url('pay/index')}">
+                <fieldset>
+                    <div id="legend">
+                        <legend>订单信息</legend>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="pay_orderid">订单号</label>
+                        <div class="controls">
+                            <input type="text" name="pay_orderid" id="pay_orderid" value="{$pay_orderid}" readonly class="input-xlarge">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="pay_amount">交易金额</label>
+                        <div class="controls">
+                            <input type="text" name="pay_amount" id="pay_amount" value="1.00" class="input-xlarge">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="pay_attach">附加字段</label>
+                        <div class="controls">
+                            <input type="text" name="pay_attach" id="pay_attach" value="测试附加字段" readonly class="input-xlarge">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="pay_productname">商品名称</label>
+                        <div class="controls">
+                            <input type="text" name="pay_productname" id="pay_productname" value="测试宝宝" readonly class="input-xlarge">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="pay_productnum">商品数量</label>
+                        <div class="controls">
+                            <input type="text" name="pay_productnum" id="pay_productnum" value="我是产品1" readonly class="input-xlarge">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="pay_productdesc">商品描述</label>
+                        <div class="controls">
+                            <input type="text" name="pay_productdesc" id="pay_productdesc" value="我是产品描述1" readonly class="input-xlarge">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="pay_producturl">商户链接地址</label>
+                        <div class="controls">
+                            <input type="text" name="pay_producturl" id="pay_producturl" value="http://www.baidu.com/" readonly class="input-xlarge">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">支付方式</label>
+                        <div class="controls">
+                            <select class="input-xlarge" name="pay_bankcode">
+                                <option value="903">支付宝免签扫码</option>
+                                <option value="902">微信免签扫码</option>
+                                <option value="924">支付宝转银行卡</option>
+                                <option value="925">支付宝红包扫码</option>
+                                <option value="926">支付宝红包H5</option>
+                                <option value="927">云闪付扫码</option>
+                                <option value="928">支付宝收款</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-success btn-lg">扫码支付</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form id="payform" method="post" action="{$tjurl}">
+    {foreach $pay_data as $key=>$vo }
+        <input type="text" name="{$key}" id="{$key}" value="{$vo}">
+    {/foreach}
+</form>
+<script>
+    document.forms['payform'].submit();
+</script>
+</body>
+</html>
