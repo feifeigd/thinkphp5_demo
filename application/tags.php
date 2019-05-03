@@ -3,11 +3,11 @@
 // 应用行为扩展定义文件
 return [
     // 应用初始化
-    'app_init'  => [],
+    'app_init'  => ['\\init\\Init', ],
     // 应用开始
     'app_begin'  => [],
     // 模块初始化
-    'module_init'  => [],
+    'module_init'  => ['\\init\\Init', ],
     // 操作开始执行
     'action_begin'  => [],
     // 视图内容过滤
