@@ -65,8 +65,7 @@ class Init extends Controller
         $domain = request()->domain();
         $port = request()->port();
         $url = $port != '80' ? $domain.':'.$port : $domain;
-
-        if(ismodule('install') && !isInstall('install') && $module != 'install'){
+        if(isModule('install') && !isInstall('install') && $module != 'install'){
             $url .= \url('install/Index/index');
             header("Location:$url");
             exit();
