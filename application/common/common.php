@@ -7,6 +7,14 @@
  */
 
 
+/// 获取网站根目录
+/// @return string
+function getRoot(){
+    $rootUrl = request()->rootUrl();
+    $rootUrl = preg_replace(['/\/public/i'], [''], $rootUrl);
+    return (trim($rootUrl) ?: '').'/';
+}
+
 /// 判断模块是否安装
 /// @param sign string 模块目录名称
 /// @return bool

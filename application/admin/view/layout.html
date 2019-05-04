@@ -2,9 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
+    <script>
+        var ROOT = '__ROOT__';
+        var URL = '__URL__';
+        var APP = '__APP__';
+        var PUBLIC = '__PUBLIC__';
+        function confirm_delete(url) {
+            art.dialog.confirm('确定要删除吗？', function(){location.href = url;});
+        }
+    </script>
 </head>
 <body>
-$END$
+
+<div class="mainbox">
+    {__CONTENT__}
+</div>
 </body>
 </html>
