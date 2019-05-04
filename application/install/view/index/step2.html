@@ -1,0 +1,164 @@
+{extend name="layout"/}
+
+{block name="content"}
+<script>
+    var complete = false;
+</script>
+<div class="jumbotron masthead">
+    <div class="container">
+        <div class="notice">
+            <h1>{:lang('step2_database')}</h1>
+            <form action="{:url('index')}" method="post" id="form1" target="_self">
+                <input type="hidden" name="step" value="4">
+                <div class="create-database">
+                    <div>
+                        <select id="databasetype" name="databasetype">
+                            <option>mysql</option>
+                        </select>
+                        <span>{:lang('step2_database_type')}</span>
+                    </div>
+                    <div>
+                        <input type="text" name="databaseurl" id="databaseurl" value="127.0.0.1">
+                        <span>{:lang('step2_database_url')}</span>
+                    </div>
+                    <div>
+                        <input type="text" name="databasename" id="databasename" value="">
+                        <span>{:lang('step2_database_name')}</span>
+                    </div>
+                    <div>
+                        <input type="text" name="databaseuser" id="databaseuser" value="">
+                        <span>{:lang('step2_database_user')}</span>
+                    </div>
+                    <div>
+                        <input type="password" name="databasepassword" id="databasepassword" value="">
+                        <span>{:lang('step2_database_password')}</span>
+                    </div>
+                    <div>
+                        <input type="text" name="databaseport" id="databaseport" value="3306">
+                        <span>{:lang('step2_database_port')}</span>
+                    </div>
+                    <div>
+                        <input type="text" name="databaseprefix" id="databaseprefix" value="cms_">
+                        <span>{:lang('step2_database_prefix')}</span>
+                    </div>
+                    <div>
+                        <a class="btn btn-primary btn-large next" onclick="checkdatabase();">点击测试数据库连接情况</a>
+                    </div>
+                    <div class="showinfo"></div>
+                </div>
+                {if(isModule('Administrator'))}
+                <div class="create-admin">
+                    <h2>{:lang('step2_create_user')}</h2>
+                    <div>
+                        <input type="text" value="Administrator" name="user" id="user">
+                        <span>{:lang('step2_username')}</span>
+                    </div>
+                    <div>
+                        <input type="password" value="" name="password" id="password">
+                        <span>{:lang('step2_userpass')}</span>
+                    </div>
+                    <div>
+                        <input type="password" value="" name="password2" id="password2">
+                        <span>{:lang('step2_confirm_userpass')}</span>
+                    </div>
+                    <div>
+                        <input type="text" value="" name="email" id="email">
+                        <span>{:lang('step2_email')}</span>
+                    </div>
+                </div>
+                <script>
+                    $('#form1').submit(function(e){
+                        var user = $('#user').val();
+                        var password = $('#password').val();
+                        var password2 = $('#password2').val();
+                        if(!user || !password || !password2){
+                            alert("{:lang('admin_err')}");
+                            return false;
+                        }
+                        if(password != password2){
+                            alert("{:lang('admin_pass_no')}");
+                            return false;
+                        }
+                    })
+                </script>
+                {/if}
+            </form>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="footer"}
+<a class="btn btn-success btn-large" href="{:url('index', ['step'=>2])}">{:lang('prev')}</a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a class="btn btn-primary btn-large readonlys next" onclick="return false;">{:lang('next')}</a>
+
+<script>
+    // 检测数据库连接状态
+    function checkdatabase(){
+        var databaseinput = $('.create-database').find('input');
+        var databaseconfig = {};
+        var status = 1;
+        databaseconfig['databasetype'] = $('#databasetype').val();
+        databaseinput.each(function(){
+            var name = $(this).attr('name');
+            var val = $(this).val();
+            if(name != "daatabasepassword")
+                if(!val){
+                    status = 0;
+                    return false;
+                }
+            databaseconfig['' + name + ''] = val;
+        });
+        if(status == 1){
+            var checkdata = "{:url('AjaxCheckDatabase')}";
+            $.ajax({
+                type: 'post',
+                url: checkdata,
+                data: databaseconfig,
+                success: function(data){
+                    if(data > 0){
+                        if($('#databasepassword').val()){
+                            $('.showinfo').removeClass('errinfo');
+                            $('.showinfo').addClass('sucinfo');
+                            if(data == 1)$('.showinfo').html("{:lang('step2_js_suc_1')}");
+                            else $('.showinfo').html("{:lang('step2_js_suc_2')}");
+                            $('.showinfo').show();
+                        }else
+                            $('.showinfo').hide();
+                        $('.next').attr('onclick', 'nextstep()');
+                        $('.next').removeClass('readonlys');
+                        return true;
+                    }else{
+                        $('.showinfo').show();
+                        $('.next').attr('onclick', 'return false;');
+                        $('.next').addClass('readonlys');
+                        $('.showinfo').removeClass('sucinfo');
+                        $('.showinfo').addClass('errinfo');
+                        $('.showinfo').html("{:lang('step2_js_err_1')}");
+                        return false;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('.next').attr('onclick', 'return false;');
+                    $('.next').addClass('readonlys');
+                    $('.showinfo').html("{:lang('step2_js_err_2')}'Install/Index/AjaxCheckDatabase'");
+                    return false;
+                },
+            });
+        }else return false;
+    }
+
+    function nextstep() {
+        $('#form1').submit();
+    }
+    $('.create-database').find('input').keyup(function(){
+        checkdatabase();
+    });
+    $('.create-database').find('input').blur(function(){
+        checkdatabase();
+    });
+    $('#step1').addClass('active');
+    $('#step2').addClass('active');
+</script>
+{/block}

@@ -73,15 +73,15 @@
 
 
 {block name="footer"}
-<a class="btn btn-primary btn-large" href="{:url('index/index', ['step'=>1])}">{:lang('prev')}</a>
+<a class="btn btn-primary btn-large" href="{:url('index', ['step'=>1])}">{:lang('prev')}</a>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<a class="btn btn-primary btn-large readonlys" href="{:url('index/index',['step'=>3])}" onclick="return false;">{:lang('next')}</a>
+<a class="btn btn-primary btn-large readonlys" href="{:url('index',['step'=>3])}" onclick="return false;">{:lang('next')}</a>
 
 <script>
     if(complete){
         $.get("{:url('WebStatus')}");
         $('.readonlys').removeAttr('onclick');
-        $('.readonlys').removeAttr('readonlys');
+        $('.readonlys').removeClass('readonlys');
     }
     $('#step1').addClass('active');
 </script>

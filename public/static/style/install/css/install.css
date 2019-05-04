@@ -285,3 +285,96 @@ table{
 }
 
 /* step2 */
+.create-database{
+    font-size: 16px;
+}
+
+select,input[type='text'], input[type='password']{
+    width: 220px;
+    display: inline-block;
+    padding: 8px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+    vertical-align: middle;
+    background: #fff;
+    border: 1px solid #ccc;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.warning{
+    width: 0;
+    position: relative;
+    text-align: center;
+    color: #ffffff;
+    background-color: #6da807;
+    border: 1px solid #6da807;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 1vw 3vh 10vh rgba(109, 168, 7, 0.8) ;
+    -moz-box-shadow: 1vw 3vh 10vh rgba(109, 168, 7, 0.8) ;
+    box-shadow: 1vw 3vh 10vh rgba(109, 168, 7, 0.8) ;
+    -webkit-background-size: 3em 3em;
+    background-size: 3em 3em;
+    background-image: linear-gradient(-45deg, transparent 0em, transparent 0.8em, #96d923 0.9em, #96d923 2.1em, transparent 2.1em, transparent 2.1em, transparent 2.9em, #96d923 3.1em);
+    -webkit-animation: warning-animation 750ms infinite linear;
+    -o-animation: warning-animation 750ms infinite linear;
+    animation: warning-animation 750ms infinite linear;
+}
+
+@-webkit-keyframes warning-animation {
+    0%{
+        background-position: 0 0;
+    }
+    100%{
+        background-position: 3em 0;
+    }
+}
+
+
+@-moz-keyframes warning-animation {
+    0%{
+        background-position: 0 0;
+    }
+    100%{
+        background-position: 3em 0;
+    }
+}
+@keyframes warning-animation {
+    0%{
+        background-position: 0 0;
+    }
+    100%{
+        background-position: 3em 0;
+    }
+}
+
+.warning:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-image: linear-gradient(to bottom, #6da807, rgba(171, 226, 77, 0.6) 15%, transparent 60%, #6da807);
+}
+
+.container .warning{
+    height: 3vh;
+}
+
+.complete{
+    margin: 80px 0;
+    font-size: 16px;
+}
