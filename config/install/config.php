@@ -52,6 +52,7 @@ return [
         ],
 
         'func_items'    => [
+            //'db'=>'class|function|model',//php是否加载类/模块 class|function|model 页可以是函数
             'file_get_contents' =>  'function',
             'curl_init' => 'function',
             'mb_strlen' => 'function',
