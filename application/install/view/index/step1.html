@@ -1,10 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{extend name="layout"/}
+
+{block name="content"}
+<script>
+    var complete = true;
+</script>
+<div class="jumbotron masthead">
+    <div class="container">
+        <h1>{$pagename}</h1>
+        <table class="table">
+            <captioon><h2>{:lang('step1_runtime')}</h2></captioon>
+            <thead>
+            <tr>
+                <th>{:lang('step1_system')}</th>
+                <th>{:lang('step1_required_need')}</th>
+                <th>{:lang('step1_required_now')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $env_items as $key => $vo}
+            <tr>
+                <td>{$vo[0]}</td>
+                <td>{$vo[1]}</td>
+                {if $vo[2]['status'] == false}<script>complete = false;</script>{/if}
+                <td><i class="{if $vo[2]['status'] == true}ico-success{else/}ico-error{/if}">&nbsp;</i>{$vo[2]['rightnow']} </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <table class="table">
+            <caption><h2>{:lang('step1_dependency')}</h2></caption>
+            <thead>
+            <tr>
+                <th>{:lang('step1_name')}</th>
+                <th>{:lang('step1_type')}</th>
+                <th>{:lang('step1_result')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $func_items as $vo}
+            <tr>
+                <td>{$vo[0]}</td>
+                <td>{$vo[1]}</td>
+                {if $vo[2] == false}<script>complete = false; </script>{/if}
+                <td><i class="{if $vo[2] == true}ico-success{else/}ico-error{/if}">&nbsp;</i>{if $vo[2] == true}支持{else/}不支持{/if} </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <table class="table">
+            <caption><h2>{:lang('step1_permissions')}</h2></caption>
+            <thead>
+            <tr>
+                <th>{:lang('step1_files')}</th>
+                <th>{:lang('step1_required_state')}</th>
+                <th>{:lang('step1_now_state')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $dir_items as $vo}
+            <tr>
+                <td>{$vo[0]}</td>
+                <td><i class="ico-success">&nbsp;</i>{:lang('step1_write')} </td>
+                {if $vo[1] == false}<script>complete = false;</script>{/if}
+                <td><i class="{if $vo[1] == true}ico-success{else/}ico-error{/if}">&nbsp;</i>{if $vo[1] == true}{:lang('step1_write')}{else/}{:lang('step1_not_write')}{/if} </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</div>
+{/block}
+
+
+{block name="footer"}
+<a class="btn btn-primary btn-large" href="{:url('index/index', ['step'=>1])}">{:lang('prev')}</a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a class="btn btn-primary btn-large readonlys" href="{:url('index/index',['step'=>3])}" onclick="return false;">{:lang('next')}</a>
+{/block}
+
+<script>
+    if(complete){
+        $.get("{:url('WebStatus')}");
+        $('.readonlys').removeAttr('onclick');
+        $('.readonlys').removeAttr('readonlys');
+    }
+</script>
