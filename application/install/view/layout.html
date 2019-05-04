@@ -27,8 +27,19 @@
                 <li class="step" id="step4" ><span>5</span>{:lang('step4')}</li>
             </ul>
         </div>
-        {__CONTENT__}
+        {block name="content"}
+        {/block}
     </div>
 </div>
+
+<footer class="footer">
+    <div class="container">
+        <div>
+            {block name="footer"}
+            {/block}
+        </div>
+    </div>
+</footer>
+
 </body>
 </html>

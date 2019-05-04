@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{extend name="layout"/}
+
+<style>
+    hr{
+        border:1px #000 dashed;
+    }
+</style>
+{block name="content"}
+<div class="wrapRight">
+    <div class="notice">
+        <h1 class="title">{:lang('step0')}</h1>
+        <!-- 这里添加协议 -->
+        <hr>
+        {$content}
+        <hr>
+        <p align="center"><strong>版权所有 2019~2019， d7kj.com 保留所有版权。 By d7kj.com</strong></p>
+        <!-- 协议结束 -->
+    </div>
+</div>
+{/block}
+
+{block name="footer"}
+<a class="btn btn-primary btn-large" href="{:url('index/index', ['step'=>2])}">{:lang('agree')}{:lang('step0')}</a>
+{/block}

@@ -7,7 +7,6 @@
  */
 
 return [
-    'layout_on' => true,
     'tpl_replace_string' => [
         '__STATIC__'    => '/static',
     ],
