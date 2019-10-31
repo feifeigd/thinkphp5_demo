@@ -3,7 +3,7 @@
 
 namespace httpdown;
 
-
+/// 浏览器从服务器下载文件
 class Httpdown
 {
     private $_speed;
@@ -70,6 +70,7 @@ class Httpdown
     private function getRange($file_size){
         if(isset($_SERVER['HTTP_RANGE']) && !empty($_SERVER['HTTP_RANGE'])){
             $range = $_SERVER['HTTP_RANGE'];
+            $range = preg_replace('/[\s|,].*/', '', $range);
             $range = explode('-', substr($range, 6));
             if (count($range) < 2){
                 $range[1] = $file_size;
