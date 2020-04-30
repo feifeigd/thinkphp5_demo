@@ -1,5 +1,5 @@
 {
-    "name": "tp_demo",
+    "name": "tp-demo",
     "description": "the new thinkphp framework demo",
     "type": "project",
     "keywords": [
@@ -20,9 +20,9 @@
         "topthink/framework": "~5.1.0",
         "topthink/think-captcha": "^2.0",
         "topthink/think-testing": "^2.0",
-        "ext-SimpleXML": "^7.2",
-        "ext-libxml": "^7.2",
-        "ext-json": "^1.6"
+        "ext-SimpleXML": "*",
+        "ext-libxml": "*",
+        "ext-json": "*"
     },
     "autoload": {
         "psr-4": {"app\\": "application"}
