@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d36ce2492d73af736cadae89b00706e3",
+    "content-hash": "6fd20f99c6aae26443adcc998948468d",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -87,12 +87,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "DeepCopy\\": "src/DeepCopy/"
-                },
                 "files": [
                     "src/DeepCopy/deep_copy.php"
-                ]
+                ],
+                "psr-4": {
+                    "DeepCopy\\": "src/DeepCopy/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -672,6 +672,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2017-11-27T05:48:46+00:00"
         },
         {
@@ -1461,12 +1462,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Ctype\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1519,12 +1520,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1593,16 +1594,16 @@
         },
         {
             "name": "topthink/framework",
-            "version": "v5.1.35",
+            "version": "v5.1.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "c53c0c6132022a87e8ee9c4109939eaf9a8a7adb"
+                "reference": "ecf1a90d397d821ce2df58f7d47e798c17eba3ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/c53c0c6132022a87e8ee9c4109939eaf9a8a7adb",
-                "reference": "c53c0c6132022a87e8ee9c4109939eaf9a8a7adb",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/ecf1a90d397d821ce2df58f7d47e798c17eba3ad",
+                "reference": "ecf1a90d397d821ce2df58f7d47e798c17eba3ad",
                 "shasum": ""
             },
             "require": {
@@ -1640,7 +1641,7 @@
                 "orm",
                 "thinkphp"
             ],
-            "time": "2019-03-03T00:44:44+00:00"
+            "time": "2022-10-25T15:04:49+00:00"
         },
         {
             "name": "topthink/think-captcha",
@@ -1661,12 +1662,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "think\\captcha\\": "src/"
-                },
                 "files": [
                     "src/helper.php"
-                ]
+                ],
+                "psr-4": {
+                    "think\\captcha\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1697,12 +1698,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "think\\helper\\": "src"
-                },
                 "files": [
                     "src/helper.php"
-                ]
+                ],
+                "psr-4": {
+                    "think\\helper\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1719,23 +1720,23 @@
         },
         {
             "name": "topthink/think-installer",
-            "version": "v2.0.0",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-installer.git",
-                "reference": "f5400a12c60e513911aef41fe443fa6920952675"
+                "reference": "38ba647706e35d6704b5d370c06f8a160b635f88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-installer/zipball/f5400a12c60e513911aef41fe443fa6920952675",
-                "reference": "f5400a12c60e513911aef41fe443fa6920952675",
+                "url": "https://api.github.com/repos/top-think/think-installer/zipball/38ba647706e35d6704b5d370c06f8a160b635f88",
+                "reference": "38ba647706e35d6704b5d370c06f8a160b635f88",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.0"
+                "composer-plugin-api": "^1.0||^2.0"
             },
             "require-dev": {
-                "composer/composer": "1.0.*@dev"
+                "composer/composer": "^1.0||^2.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -1756,7 +1757,7 @@
                     "email": "448901948@qq.com"
                 }
             ],
-            "time": "2018-05-11T06:45:42+00:00"
+            "time": "2021-01-14T12:12:14+00:00"
         },
         {
             "name": "topthink/think-testing",
@@ -1781,12 +1782,12 @@
             },
             "type": "think-testing",
             "autoload": {
-                "psr-4": {
-                    "think\\testing\\": "src"
-                },
                 "files": [
                     "src/config.php"
-                ]
+                ],
+                "psr-4": {
+                    "think\\testing\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1805,12 +1806,12 @@
             "version": "1.4.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/83e253c8e0be5b0257b881e1827274667c5c17a9",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/83e253c8e0be5b0257b881e1827274667c5c17a9",
                 "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9",
                 "shasum": ""
             },
@@ -1860,9 +1861,10 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.6.0",
-        "ext-simplexml": "^7.2",
-        "ext-libxml": "^7.2",
-        "ext-json": "^1.6"
+        "ext-simplexml": "*",
+        "ext-libxml": "*",
+        "ext-json": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
